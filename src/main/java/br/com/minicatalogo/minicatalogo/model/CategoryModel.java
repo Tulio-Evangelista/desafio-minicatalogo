@@ -1,15 +1,22 @@
 package br.com.minicatalogo.minicatalogo.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tb_category")
 public class CategoryModel {
 
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String nome;
+
+    @OneToMany(mappedBy = "categoria")
+    private CategoryModel categoria;
+
+
 
     public CategoryModel() {
     }

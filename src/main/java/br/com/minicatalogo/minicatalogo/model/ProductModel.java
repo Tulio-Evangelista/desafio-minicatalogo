@@ -1,10 +1,25 @@
 package br.com.minicatalogo.minicatalogo.model;
 
+
+import jakarta.persistence.*;
+
+import java.util.List;
+
+@Entity
 public class ProductModel {
 
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY )
     private long id;
+
+
     private String nome;
     private Double preco;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private List<CategoryModel> categoryModels;
 
 
     public ProductModel() {
