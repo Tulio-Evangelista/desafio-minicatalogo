@@ -22,7 +22,9 @@ public class ProductController {
     @PostMapping("/create")
     public ResponseEntity<String> createProduct(@RequestBody ProductModel productModel) {
         {
-            return ResponseEntity.status(HttpStatus.CREATED).body("Produto criado com sucesso: ");
+            ProductModel produtoCriado = productService.createProduct(productModel);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Produto criado com sucesso: " + produtoCriado.getNome());
+
 
         }
     }
@@ -30,6 +32,8 @@ public class ProductController {
     @PutMapping("/{id}")
     public ResponseEntity<String> updateProduct(@PathVariable Long id ,@RequestBody ProductModel productModel) {
         {
+                productModel.setId(id);
+                ProductModel produtoAtualizado = productService.updateProduct(productModel);
             return ResponseEntity.status(HttpStatus.OK).body("Produto atualizado com sucesso: ");
 
         }
@@ -38,7 +42,8 @@ public class ProductController {
     @GetMapping("/buscar")
     public ResponseEntity<String> getAllProducts() {
         {
-            return ResponseEntity.status(HttpStatus.OK).body("Lista de produtos: ");
+            ProductModel produtosEncontrados = productService.findAllProducts();
+            return ResponseEntity.status(HttpStatus.OK).body("Produtos encontrados: " + produtosEncontrados);
 
         }
     }
@@ -46,6 +51,7 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
         {
+            ProductModel produtoDeletado =productService.deleteProduct(id);
             return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso: ");
 
         }
