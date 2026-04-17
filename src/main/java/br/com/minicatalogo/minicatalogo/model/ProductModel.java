@@ -19,10 +19,14 @@ public class ProductModel {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private List<CategoryModel> categoryModels;
+    private CategoryModel category;
 
 
     public ProductModel() {
+    }
+    public ProductModel(String nome, Double preco) {
+        this.nome = nome;
+        this.preco = preco;
     }
 
     public ProductModel(long id, String nome, Double preco) {
@@ -31,6 +35,14 @@ public class ProductModel {
         this.preco = preco;
     }
 
+
+    public CategoryModel getCategoryModels() {
+        return category;
+    }
+
+    public void setCategoryModels(CategoryModel categoryModels) {
+        this.category = categoryModels;
+    }
 
     public long getId() {
         return id;

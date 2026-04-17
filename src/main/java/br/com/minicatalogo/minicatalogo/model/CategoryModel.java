@@ -3,6 +3,8 @@ package br.com.minicatalogo.minicatalogo.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "tb_category")
 public class CategoryModel {
@@ -13,8 +15,8 @@ public class CategoryModel {
     private long id;
     private String nome;
 
-    @OneToMany(mappedBy = "categoria")
-    private CategoryModel categoria;
+    @OneToMany(mappedBy = "category")
+    private List<ProductModel> productModels;
 
 
 
@@ -24,6 +26,14 @@ public class CategoryModel {
     public CategoryModel(long id, String nome) {
         this.id = id;
         this.nome = nome;
+    }
+
+    public List<ProductModel> getProductModels() {
+        return productModels;
+    }
+
+    public void setProductModels(List<ProductModel> productModels) {
+        this.productModels = productModels;
     }
 
     public long getId() {
