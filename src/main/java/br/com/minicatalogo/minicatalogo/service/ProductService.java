@@ -14,7 +14,9 @@ public class ProductService {
         }
 
     public ProductModel createProduct(ProductModel product) {
-
+        if (product.getPreco() == null || product.getPreco() <= 0) {
+            throw new RuntimeException("Preço deve ser maior que zero");
+        }
         return productRepository.save(product);
     }
 
@@ -23,21 +25,20 @@ public class ProductService {
     }
 
     public ProductModel updateProduct(ProductModel product) {
-         if (productRepository.existsById(product.getId())) {
-            return productRepository.save(product);
-    }else {
-            throw new RuntimeException("Produto não encontrado");
-        }
+        ProductModel existingId = productRepository.findById(product.getId())
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+
+        existingId.setNome(product.getNome());
+        existingId.setPreco(product.getPreco());
+        return productRepository.save(existingId);
     }
 
 
     public ProductModel deleteProduct(Long id) {
-        if (productRepository.existsById(id)) {
-            productRepository.deleteById(id);
-            return null;
-        }else {
-            throw new RuntimeException("Produto não encontrado");
-        }
+        ProductModel product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        productRepository.deleteById(id);
+        return product;
     }
 
 }
